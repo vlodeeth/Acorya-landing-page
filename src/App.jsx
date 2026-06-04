@@ -6,6 +6,7 @@ import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
+import CookieBanner from './components/landing/CookieBanner';
 import Home from './pages/Home';
 import MentionsLegales from './pages/MentionsLegales';
 // Add page imports here
@@ -52,6 +53,7 @@ function App() {
         <Router>
           <ScrollToTop />
           <AuthenticatedApp />
+          <CookieBanner />
         </Router>
         <Toaster />
       </QueryClientProvider>
