@@ -1,14 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 
-/**
- * Full-page canvas that draws slowly drifting noise-like dots.
- * Positioned fixed behind everything so all sections benefit.
- */
-export default function AmbientBackground() {
+function AmbientCanvas() {
   const canvasRef = useRef(null);
-
-  // Désactiver complètement le canvas sur mobile
-  if (typeof window !== 'undefined' && window.innerWidth < 768) return null;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -25,9 +18,7 @@ export default function AmbientBackground() {
     };
     window.addEventListener('resize', resize);
 
-    const isMobile = window.innerWidth < 768;
-    // Stars
-    const STARS = Array.from({ length: isMobile ? 20 : 80 }, () => ({
+    const STARS = Array.from({ length: 80 }, () => ({
       x: Math.random() * W,
       y: Math.random() * H,
       r: Math.random() * 1.0 + 0.2,
@@ -37,10 +28,8 @@ export default function AmbientBackground() {
       pulse: Math.random() * Math.PI * 2,
     }));
 
-    let t = 0;
     const draw = () => {
       ctx.clearRect(0, 0, W, H);
-      t += 0.008;
       STARS.forEach(s => {
         s.pulse += 0.02;
         const a = s.alpha * (0.5 + 0.5 * Math.sin(s.pulse));
@@ -68,4 +57,10 @@ export default function AmbientBackground() {
       aria-hidden
     />
   );
+}
+
+export default function AmbientBackground() {
+  // Ne rendre le canvas que sur desktop
+  if (typeof window !== 'undefined' && window.innerWidth < 1024) return null;
+  return <AmbientCanvas />;
 }
