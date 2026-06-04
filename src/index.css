@@ -1,0 +1,180 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@200;300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ── Palette ACORYA ──────────────────────────────────── */
+    --terre:   20 46% 53%;   /* #C4724A – Terre (principale)  */
+    --ardoise: 200 15% 28%;  /* #3D4A52 – Ardoise (structurant) */
+    --sauge:   157 20% 56%;  /* #7A9E8E – Sauge (secondaire)  */
+    --sable:   37 55% 76%;   /* #E8C99A – Sable               */
+    --creme:   37 29% 94%;   /* #F5F0E8 – Crème (fond principal) */
+
+    /* ── Tokens shadcn mappés sur la palette ─────────────── */
+    --background:          37 29% 94%;   /* Crème */
+    --foreground:          200 15% 28%;  /* Ardoise */
+    --card:                0 0% 100%;
+    --card-foreground:     200 15% 28%;
+    --popover:             0 0% 100%;
+    --popover-foreground:  200 15% 28%;
+    --primary:             20 46% 53%;   /* Terre */
+    --primary-foreground:  0 0% 100%;
+    --secondary:           157 20% 56%;  /* Sauge */
+    --secondary-foreground: 0 0% 100%;
+    --muted:               37 29% 88%;   /* Crème sombre */
+    --muted-foreground:    200 15% 50%;
+    --accent:              37 55% 76%;   /* Sable */
+    --accent-foreground:   200 15% 28%;
+    --destructive:         0 60% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border:              37 30% 82%;   /* Sable léger */
+    --input:               37 29% 88%;
+    --ring:                20 46% 53%;
+    --radius: 0.75rem;
+    --font-heading: 'Cormorant Garamond', Georgia, serif;
+    --font-body:    'Montserrat', Arial, ui-sans-serif, sans-serif;
+    --font-display: 'Cormorant Garamond', Georgia, serif;
+    --font-mono:    ui-monospace, monospace;
+    --sidebar-background:  37 29% 94%;
+    --sidebar-foreground:  200 15% 28%;
+    --sidebar-primary:     20 46% 53%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent:      37 29% 88%;
+    --sidebar-accent-foreground:  200 15% 28%;
+    --sidebar-border:      37 30% 82%;
+    --sidebar-ring:        20 46% 53%;
+  }
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-weight: 300;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Hiérarchie typographique ACORYA ─────────────────── */
+  h1 {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: 42pt;
+    color: #C4724A;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+  }
+  h2 {
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 16pt;
+    color: #3D4A52;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  h3 {
+    font-family: var(--font-body);
+    font-weight: 400;
+    font-size: 12pt;
+    color: #3D4A52;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  p, li, span {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: 10pt;
+    line-height: 1.6;
+    color: #3D4A52;
+  }
+}
+
+html { scroll-behavior: smooth; }
+
+/* Glass morphism — adapté au fond crème */
+.glass {
+  background: rgba(245, 240, 232, 0.55);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(196, 114, 74, 0.12);
+}
+.glass-strong {
+  background: rgba(245, 240, 232, 0.70);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(196, 114, 74, 0.18);
+}
+/* Variante sombre pour sections foncées */
+.glass-dark {
+  background: rgba(61, 74, 82, 0.45);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(232, 201, 154, 0.10);
+}
+.glass-dark-strong {
+  background: rgba(61, 74, 82, 0.65);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(232, 201, 154, 0.14);
+}
+
+/* Gradient texts */
+.gradient-text-terre {
+  background: linear-gradient(135deg, #C4724A, #b05a34);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.gradient-text-sauge {
+  background: linear-gradient(135deg, #7A9E8E, #5a8070);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.gradient-text-mixed {
+  background: linear-gradient(135deg, #C4724A 0%, #b05a34 50%, #7A9E8E 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+/* Texte Terre simple */
+.text-terre { color: #C4724A; }
+.text-ardoise { color: #3D4A52; }
+.text-sauge { color: #7A9E8E; }
+.text-sable { color: #E8C99A; }
+.text-creme { color: #F5F0E8; }
+
+/* Marquee */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee { animation: marquee 40s linear infinite; }
+
+@keyframes marquee-fast {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee-fast { animation: marquee-fast 25s linear infinite; }
+
+/* Float */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-16px); }
+}
+.animate-float { animation: float 7s ease-in-out infinite; }
+
+/* Noise texture overlay for glassmorphism depth */
+.glass::before, .glass-strong::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity: 0.018;
+  pointer-events: none;
+}
+.glass, .glass-strong { position: relative; }
