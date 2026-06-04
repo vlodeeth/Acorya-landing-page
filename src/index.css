@@ -178,3 +178,25 @@ html { scroll-behavior: smooth; }
   pointer-events: none;
 }
 .glass, .glass-strong { position: relative; }
+
+/* ── Optimisations mobile ───────────────────────────────── */
+@media (max-width: 768px) {
+  /* Désactiver les backdrop-filter coûteux */
+  .glass, .glass-strong, .glass-dark, .glass-dark-strong {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+  /* Désactiver les animations de fond */
+  .animate-float {
+    animation: none !important;
+  }
+  /* Ralentir le marquee pour économiser les ressources */
+  .animate-marquee {
+    animation-duration: 60s !important;
+  }
+  /* Désactiver les transformations 3D */
+  * {
+    transform-style: flat !important;
+    perspective: none !important;
+  }
+}

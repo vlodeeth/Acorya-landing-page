@@ -40,6 +40,7 @@ export default function HeroSection() {
   const springY = useSpring(0, { stiffness: 60, damping: 20 });
 
   useEffect(() => {
+    if (window.innerWidth < 768) return;
     const h = (e) => {
       const x = (e.clientX / window.innerWidth - 0.5) * 40;
       const y = (e.clientY / window.innerHeight - 0.5) * 40;

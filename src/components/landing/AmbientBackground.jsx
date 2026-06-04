@@ -22,8 +22,9 @@ export default function AmbientBackground() {
     };
     window.addEventListener('resize', resize);
 
+    const isMobile = window.innerWidth < 768;
     // Stars
-    const STARS = Array.from({ length: 80 }, () => ({
+    const STARS = Array.from({ length: isMobile ? 20 : 80 }, () => ({
       x: Math.random() * W,
       y: Math.random() * H,
       r: Math.random() * 1.0 + 0.2,
