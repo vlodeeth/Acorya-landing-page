@@ -15,9 +15,10 @@ const services = [
 export default function ServicesSection() {
   const [active, setActive] = useState(0);
   const sectionRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
-  const bgScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.15]);
-  const bgOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 0.12, 0.12, 0]);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const { scrollYProgress } = useScroll(isMobile ? {} : { target: sectionRef, offset: ['start end', 'end start'] });
+  const bgScale = useTransform(scrollYProgress, [0, 1], isMobile ? [1, 1] : [1.05, 1.15]);
+  const bgOpacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], isMobile ? [0, 0, 0, 0] : [0, 0.12, 0.12, 0]);
 
   return (
     <section ref={sectionRef} id="expertises" className="relative py-32 px-6 overflow-hidden" style={{ background: '#2a343b' }}>
@@ -101,15 +102,17 @@ export default function ServicesSection() {
               exit={{ opacity: 0, y: -24, rotateX: -8 }}
               transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               className="rounded-2xl p-10 relative overflow-hidden border"
-              style={{ background: 'rgba(245,240,232,0.06)', borderColor: 'rgba(196,114,74,0.25)', backdropFilter: 'blur(12px)', transformStyle: 'preserve-3d' }}
+              style={{ background: 'rgba(245,240,232,0.06)', borderColor: 'rgba(196,114,74,0.25)', ...(isMobile ? {} : { backdropFilter: 'blur(12px)' }) }}
             >
-              {/* Animated glow orb */}
-              <motion.div
-                animate={{ scale: [1, 1.2, 1], opacity: [0.08, 0.15, 0.08] }}
-                transition={{ duration: 4, repeat: Infinity }}
-                className="absolute top-0 right-0 w-48 h-48 rounded-full blur-[80px] pointer-events-none"
-                style={{ background: services[active].color }}
-              />
+              {/* Glow orb — desktop only */}
+              {!isMobile && (
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1], opacity: [0.08, 0.15, 0.08] }}
+                  transition={{ duration: 4, repeat: Infinity }}
+                  className="absolute top-0 right-0 w-48 h-48 rounded-full blur-[80px] pointer-events-none"
+                  style={{ background: services[active].color }}
+                />
+              )}
 
               <span className="text-[8px] font-body font-medium tracking-[0.2em] block mb-6"
                 style={{ color: services[active].color }}>{services[active].tag}</span>

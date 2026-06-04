@@ -7,6 +7,9 @@ import React, { useEffect, useRef } from 'react';
 export default function AmbientBackground() {
   const canvasRef = useRef(null);
 
+  // Désactiver complètement le canvas sur mobile
+  if (typeof window !== 'undefined' && window.innerWidth < 768) return null;
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;

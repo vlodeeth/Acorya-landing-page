@@ -61,8 +61,8 @@ export default function HeroSection() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#2a343b]/90 via-[#3D4A52]/65 to-[#2a343b]" />
       </motion.div>
 
-      {/* Floating particles */}
-      {PARTICLES.map((p, i) => <Particle key={i} {...p} />)}
+      {/* Floating particles — desktop only */}
+      {typeof window !== 'undefined' && window.innerWidth >= 768 && PARTICLES.map((p, i) => <Particle key={i} {...p} />)}
 
       {/* Mouse-tracking orbs */}
       <motion.div className="absolute w-[500px] h-[500px] rounded-full blur-[120px] pointer-events-none"

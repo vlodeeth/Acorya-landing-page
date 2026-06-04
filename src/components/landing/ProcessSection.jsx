@@ -11,6 +11,7 @@ const steps = [
 
 function StepCard({ step, i }) {
   const { ref, onMouseMove, onMouseLeave } = use3DTilt(10);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
   return (
     <motion.div
       ref={ref}
@@ -21,12 +22,12 @@ function StepCard({ step, i }) {
       viewport={{ once: true, margin: '-30px' }}
       transition={{ duration: 0.6, delay: i * 0.14, ease: [0.22, 1, 0.36, 1] }}
       className="group rounded-2xl p-6 text-center relative overflow-hidden cursor-default border"
-      style={{ background: 'rgba(245,240,232,0.06)', borderColor: 'rgba(196,114,74,0.20)', backdropFilter: 'blur(10px)', transformStyle: 'preserve-3d' }}
+      style={{ background: 'rgba(245,240,232,0.06)', borderColor: 'rgba(196,114,74,0.20)' }}
     >
       <motion.p
         className="font-heading font-semibold leading-none mb-4"
         style={{ fontSize: '5rem', color: step.color, opacity: 0.7 }}
-        animate={{ y: [0, -5, 0] }}
+        animate={isMobile ? {} : { y: [0, -5, 0] }}
         transition={{ duration: 4 + i * 0.8, repeat: Infinity, ease: 'easeInOut' }}
       >
         {step.num}
@@ -52,15 +53,20 @@ function StepCard({ step, i }) {
 
 export default function ProcessSection() {
   const sectionRef = useRef(null);
-  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
-  const titleX = useTransform(scrollYProgress, [0, 0.5], [-30, 0]);
-  const titleOpacity = useTransform(scrollYProgress, [0, 0.2], [0, 1]);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+  const { scrollYProgress } = useScroll(isMobile ? {} : { target: sectionRef, offset: ['start end', 'end start'] });
+  const titleX = useTransform(scrollYProgress, [0, 0.5], isMobile ? [0, 0] : [-30, 0]);
+  const titleOpacity = useTransform(scrollYProgress, [0, 0.2], isMobile ? [1, 1] : [0, 1]);
 
   return (
     <section ref={sectionRef} id="methode" className="relative py-32 px-6 overflow-hidden" style={{ background: '#2a343b' }}>
       <div className="max-w-6xl mx-auto">
         <motion.div
-          style={{ x: titleX, opacity: titleOpacity }}
+          style={isMobile ? {} : { x: titleX, opacity: titleOpacity }}
+          initial={isMobile ? { opacity: 0, y: 30 } : false}
+          whileInView={isMobile ? { opacity: 1, y: 0 } : undefined}
+          viewport={isMobile ? { once: true } : undefined}
+          transition={isMobile ? { duration: 0.6 } : undefined}
           className="text-center mb-8"
         >
           <span className="text-xs font-body font-medium tracking-[0.25em] mb-4 block uppercase" style={{ color: 'rgba(122,158,142,0.9)' }}>

@@ -5,22 +5,32 @@ import { ArrowRight, CheckCircle2 } from 'lucide-react';
 export default function CTASection() {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const isDesktop = typeof window !== 'undefined' && window.innerWidth >= 768;
 
   return (
     <section id="contact" className="relative py-32 px-6 overflow-hidden" style={{ background: '#3D4A52' }}>
-      {/* Animated background orbs */}
-      <motion.div
-        animate={{ scale: [1, 1.3, 1], opacity: [0.08, 0.18, 0.08] }}
-        transition={{ duration: 8, repeat: Infinity }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[140px] pointer-events-none"
-        style={{ background: '#C4724A' }}
-      />
-      <motion.div
-        animate={{ scale: [1.3, 1, 1.3], opacity: [0.05, 0.12, 0.05] }}
-        transition={{ duration: 10, repeat: Infinity }}
-        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full blur-[100px] pointer-events-none"
-        style={{ background: '#7A9E8E' }}
-      />
+      {/* Animated background orbs — desktop only */}
+      {isDesktop && (
+        <>
+          <motion.div
+            animate={{ scale: [1, 1.3, 1], opacity: [0.08, 0.18, 0.08] }}
+            transition={{ duration: 8, repeat: Infinity }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full blur-[140px] pointer-events-none"
+            style={{ background: '#C4724A' }}
+          />
+          <motion.div
+            animate={{ scale: [1.3, 1, 1.3], opacity: [0.05, 0.12, 0.05] }}
+            transition={{ duration: 10, repeat: Infinity }}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full blur-[100px] pointer-events-none"
+            style={{ background: '#7A9E8E' }}
+          />
+        </>
+      )}
+      {/* Fond statique mobile */}
+      {!isDesktop && (
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(circle, rgba(196,114,74,0.15), transparent 70%)' }} />
+      )}
 
       <div className="relative z-10 max-w-3xl mx-auto text-center">
         <motion.div

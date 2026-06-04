@@ -6,8 +6,10 @@ import { useRef, useCallback } from 'react';
  */
 export function use3DTilt(strength = 12) {
   const ref = useRef(null);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 1024;
 
   const onMouseMove = useCallback((e) => {
+    if (isMobile) return;
     const el = ref.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
