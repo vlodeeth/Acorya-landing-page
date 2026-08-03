@@ -14,7 +14,7 @@ import Progression from '../components/site/Progression';
 
 export default function Home() {
   return (
-    <div style={{ background: '#F5F0E8' }}>
+    <div style={{ background: 'hsl(var(--fond))' }}>
       <SiteNav />
       <main>
         <Hero />

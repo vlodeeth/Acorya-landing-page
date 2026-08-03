@@ -38,7 +38,7 @@ export default function Methode() {
     <Section id="methode" sombre>
       <EnTete
         sombre
-        cartel="La méthode"
+        donnee="La méthode"
         titre="Rien ne démarre avant d'être écrit."
         chapo="Quatre étapes, dans cet ordre, sans exception. C'est la même exigence que sur les projets des grands groupes, appliquée à la réalité d'une PME."
       />

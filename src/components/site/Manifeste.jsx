@@ -11,7 +11,7 @@ export default function Manifeste() {
   return (
     <section
       style={{
-        background: '#F5F0E8',
+        background: 'transparent',
         paddingTop: 'clamp(7rem, 5rem + 9vw, 13rem)',
         paddingBottom: 'clamp(7rem, 5rem + 9vw, 13rem)',
       }}
@@ -19,7 +19,7 @@ export default function Manifeste() {
       <div className="cadre">
         <div className="grille-marge">
           <Reveal>
-            <p className="cartel cartel-fin" style={{ color: '#C4724A', paddingTop: '0.7rem' }}>
+            <p className="donnee donnee-fine" style={{ color: '#C4724A', paddingTop: '0.7rem' }}>
               Ce que nous cherchons
             </p>
           </Reveal>
@@ -28,7 +28,7 @@ export default function Manifeste() {
             texte="Donner à chaque dirigeant de TPE et PME ce que seuls les patrons de grands groupes ont eu le droit d'avoir."
             className="titre-section"
             couleur="#3D4A52"
-            couleurFaible="rgba(61, 74, 82, 0.16)"
+            couleurFaible="rgba(245, 240, 232, 0.14)"
             style={{ maxWidth: '18ch' }}
           />
         </div>

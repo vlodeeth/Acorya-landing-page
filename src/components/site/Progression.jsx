@@ -61,8 +61,8 @@ export default function Progression() {
       }}
     >
       <span
-        className="cartel cartel-fin"
-        style={{ color: 'rgba(61, 74, 82, 0.5)', fontSize: '0.5625rem', mixBlendMode: 'difference' }}
+        className="donnee donnee-fine"
+        style={{ color: 'rgba(245, 240, 232, 0.45)', fontSize: '0.5625rem', mixBlendMode: 'difference' }}
       >
         {courante ? courante.label : ''}
       </span>

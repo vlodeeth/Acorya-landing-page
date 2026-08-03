@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Montserrat:wght@200;300;400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,257 +6,271 @@
 
 @layer base {
   :root {
-    /* ── Palette ACORYA — charte v1.0 ───────────────────────
-       Terre    #C4724A  signature, titres, CTA        ~30 %
-       Ardoise  #3D4A52  structure, texte, fonds       ~40 %
-       Sable    #E8C99A  filets, respiration           ~25 % avec Crème
-       Crème    #F5F0E8  fond principal
-       Sauge    #7A9E8E  détails                        ~5 %                */
-    --terre:   20 46% 53%;
-    --ardoise: 200 15% 28%;
-    --sauge:   157 20% 56%;
-    --sable:   37 55% 76%;
-    --creme:   37 29% 94%;
+    /* ── Palette ACORYA — charte v1.0, régime nocturne ──────
+       La charte prévoit « Fond Ardoise + Texte Sable » comme version
+       premium / mode sombre. Le site l'adopte intégralement : l'ardoise
+       devient l'espace, le cuivre devient la lumière.                   */
+    --terre:   20 46% 53%;   /* #C4724A */
+    --ardoise: 200 15% 28%;  /* #3D4A52 */
+    --sauge:   157 20% 56%;  /* #7A9E8E */
+    --sable:   37 55% 76%;   /* #E8C99A */
+    --creme:   37 29% 94%;   /* #F5F0E8 */
 
-    /* Ardoise assombrie — fonds pleins, jamais du noir */
-    --ardoise-fonce: 200 16% 20%;
+    /* Profondeurs dérivées de l'ardoise — l'espace derrière l'interface */
+    --vide:      200 17% 11%;  /* #171D21 */
+    --fond:      200 16% 15%;  /* #1F272B */
+    --surface:   200 15% 20%;  /* #2B353B */
+    --surface-h: 200 14% 25%;  /* #36424A */
 
     /* ── Tokens shadcn ─────────────────────────────────── */
-    --background:           37 29% 94%;
-    --foreground:          200 15% 28%;
-    --card:                  0 0% 100%;
-    --card-foreground:     200 15% 28%;
-    --popover:               0 0% 100%;
-    --popover-foreground:  200 15% 28%;
-    --primary:              20 46% 53%;
-    --primary-foreground:    0 0% 100%;
-    --secondary:           157 20% 56%;
-    --secondary-foreground:  0 0% 100%;
-    --muted:                37 29% 88%;
-    --muted-foreground:    200 12% 45%;
-    --accent:               37 55% 76%;
-    --accent-foreground:   200 15% 28%;
-    --destructive:           0 60% 45%;
-    --destructive-foreground: 0 0% 100%;
-    --border:               37 30% 82%;
-    --input:                37 30% 78%;
-    --ring:                 20 46% 53%;
+    --background:           200 16% 15%;
+    --foreground:            37 29% 94%;
+    --card:                 200 15% 20%;
+    --card-foreground:       37 29% 94%;
+    --popover:              200 15% 20%;
+    --popover-foreground:    37 29% 94%;
+    --primary:               20 46% 53%;
+    --primary-foreground:    37 29% 94%;
+    --secondary:            157 20% 56%;
+    --secondary-foreground: 200 16% 15%;
+    --muted:                200 15% 20%;
+    --muted-foreground:      37 20% 70%;
+    --accent:                37 55% 76%;
+    --accent-foreground:    200 16% 15%;
+    --destructive:            0 60% 50%;
+    --destructive-foreground: 37 29% 94%;
+    --border:                37 55% 76%;
+    --input:                200 14% 25%;
+    --ring:                  20 46% 53%;
 
-    /* Angles fermes : ni template arrondi, ni brutalisme à angle vif */
-    --radius: 0.125rem;
+    --radius: 0;
 
-    --font-heading: 'Cormorant Garamond', Georgia, serif;
-    --font-body:    'Montserrat', Arial, ui-sans-serif, sans-serif;
-    --font-display: 'Cormorant Garamond', Georgia, serif;
-    --font-mono:    ui-monospace, monospace;
+    /* Le serif est relégué au rang d'accent : il ne porte plus la page. */
+    --font-instrument: 'Montserrat', 'Helvetica Neue', Arial, sans-serif;
+    --font-serif: 'Cormorant Garamond', Georgia, serif;
+    --font-mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, monospace;
+    --font-heading: var(--font-instrument);
+    --font-body: var(--font-instrument);
+    --font-display: var(--font-instrument);
 
-    /* ── Échelle typographique ──────────────────────────
-       En rem : respecte le réglage de taille du visiteur.
-       Les pt de la charte sont convertis (10 pt ≈ 1 rem de lecture web). */
-    --pas-cartel: 0.6875rem;                            /* labels, cartels   */
-    --pas-corps:  1rem;                                 /* corps de texte    */
-    --pas-chapo:  clamp(1.0625rem, 0.95rem + 0.5vw, 1.3125rem);
-    --pas-titre:  clamp(1.875rem, 1.4rem + 1.9vw, 3.125rem); /* titres de section */
-    --pas-display: clamp(2.25rem, 1.7rem + 2.4vw, 4rem);     /* hero              */
+    /* ── Échelle ───────────────────────────────────────── */
+    --pas-donnee: 0.6875rem;
+    --pas-corps:  1rem;
+    --pas-chapo:  clamp(1.0625rem, 0.95rem + 0.45vw, 1.25rem);
+    --pas-titre:  clamp(1.75rem, 1.1rem + 2.6vw, 3.5rem);
+    --pas-display: clamp(2.25rem, 1.2rem + 4.4vw, 5.5rem);
 
-    /* ── Rythme vertical ───────────────────────────────── */
     --marge-section: clamp(6rem, 4rem + 8vw, 11rem);
     --gouttiere: clamp(1.5rem, 1rem + 3vw, 5rem);
 
-    --transition: 380ms cubic-bezier(0.22, 1, 0.36, 1);
+    --lueur: 0 0 24px rgba(196, 114, 74, 0.32);
+    --transition: 420ms cubic-bezier(0.16, 1, 0.3, 1);
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-
   html {
     scroll-behavior: smooth;
-    /* Compense la barre fixe lors des ancres */
     scroll-padding-top: 5rem;
     -webkit-text-size-adjust: 100%;
+    background: hsl(var(--fond));
   }
 
   body {
-    @apply bg-background text-foreground;
-    font-family: var(--font-body);
+    background: hsl(var(--fond));
+    color: hsl(var(--creme));
+    font-family: var(--font-instrument);
     font-weight: 300;
     font-size: var(--pas-corps);
-    line-height: 1.65;
+    line-height: 1.7;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Les titres n'imposent plus ni couleur ni taille :
-     chaque section décide, via les classes ci-dessous. */
   h1, h2, h3, h4 {
-    font-family: var(--font-heading);
-    font-weight: 300;
-    line-height: 1.05;
-    letter-spacing: -0.015em;
+    font-family: var(--font-instrument);
+    font-weight: 200;
+    line-height: 1.02;
     text-wrap: balance;
   }
 
-  p {
-    text-wrap: pretty;
-  }
+  p { text-wrap: pretty; }
 
-  /* Accessibilité : le focus doit rester visible partout */
   :focus-visible {
-    outline: 2px solid hsl(var(--terre));
-    outline-offset: 3px;
-    border-radius: 1px;
+    outline: 1px solid hsl(var(--terre));
+    outline-offset: 4px;
   }
 
   ::selection {
-    background: hsl(var(--terre) / 0.85);
+    background: hsl(var(--terre));
     color: hsl(var(--creme));
   }
+
+  /* Barre de défilement assortie à l'interface */
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: hsl(var(--vide)); }
+  ::-webkit-scrollbar-thumb { background: hsl(var(--surface-h)); }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--terre)); }
 }
 
 @layer components {
-  /* ── Le cartel ──────────────────────────────────────────
-     Primitive de la marque : la plaque nominative posée devant
-     chaque siège d'une table de direction. Sert aux labels de
-     section, aux fonctions et aux étiquettes de catégorie.     */
-  .cartel {
-    font-family: var(--font-body);
-    font-weight: 300;
-    font-size: var(--pas-cartel);
-    letter-spacing: 0.3em;
+  /* ── Libellé instrumental ───────────────────────────────
+     Monospace : dans une salle de pilotage, les libellés sont
+     des données, pas de la mise en page.                        */
+  .donnee {
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: var(--pas-donnee);
+    letter-spacing: 0.22em;
     text-transform: uppercase;
     line-height: 1.4;
   }
 
-  .cartel-fin {
-    font-weight: 200;
-    letter-spacing: 0.34em;
+  .donnee-fine {
+    font-size: 0.625rem;
+    letter-spacing: 0.28em;
   }
 
-  /* ── Titres ─────────────────────────────────────────── */
+  /* ── Titres ─────────────────────────────────────────────
+     Montserrat ExtraLight, capitales largement espacées : la
+     graisse fine et l'espacement font toute la tension.          */
   .titre-display {
-    font-family: var(--font-display);
-    font-weight: 300;
+    font-family: var(--font-instrument);
+    font-weight: 200;
     font-size: var(--pas-display);
-    line-height: 0.98;
-    letter-spacing: -0.025em;
-  }
-
-  .titre-section {
-    font-family: var(--font-heading);
-    font-weight: 300;
-    font-size: var(--pas-titre);
-    line-height: 1.04;
-    letter-spacing: -0.02em;
-  }
-
-  .chapo {
-    font-family: var(--font-body);
-    font-weight: 300;
-    font-size: var(--pas-chapo);
-    line-height: 1.55;
-  }
-
-  /* Citation / accroche — Cormorant italique, prévu par la charte */
-  .accroche {
-    font-family: var(--font-heading);
-    font-weight: 300;
-    font-style: italic;
-    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
-    line-height: 1.25;
+    line-height: 1.0;
     letter-spacing: -0.01em;
   }
 
-  /* ── Filet ──────────────────────────────────────────────
-     Le séparateur 0,5 pt sable de la charte, transposé au web. */
+  .titre-section {
+    font-family: var(--font-instrument);
+    font-weight: 200;
+    font-size: var(--pas-titre);
+    line-height: 1.06;
+    letter-spacing: -0.005em;
+  }
+
+  .chapo {
+    font-size: var(--pas-chapo);
+    font-weight: 300;
+    line-height: 1.65;
+    color: rgba(245, 240, 232, 0.62);
+  }
+
+  /* Le serif ne subsiste que pour la parole humaine */
+  .voix {
+    font-family: var(--font-serif);
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(1.375rem, 1.05rem + 1.4vw, 2.25rem);
+    line-height: 1.3;
+    color: hsl(var(--sable));
+  }
+
+  /* ── Cadre d'interface ──────────────────────────────────
+     Quatre équerres, comme un viseur : le bloc est cadré, pas encadré. */
+  .viseur {
+    position: relative;
+  }
+  .viseur::before,
+  .viseur::after {
+    content: '';
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-color: rgba(232, 201, 154, 0.45);
+    border-style: solid;
+    pointer-events: none;
+  }
+  .viseur::before {
+    top: 0;
+    left: 0;
+    border-width: 1px 0 0 1px;
+  }
+  .viseur::after {
+    bottom: 0;
+    right: 0;
+    border-width: 0 1px 1px 0;
+  }
+
+  /* ── Grille technique ───────────────────────────────── */
+  .grille-technique {
+    background-image:
+      linear-gradient(to right, rgba(232, 201, 154, 0.055) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(232, 201, 154, 0.055) 1px, transparent 1px);
+    background-size: 5.5rem 5.5rem;
+  }
+
+  /* ── Filets ─────────────────────────────────────────── */
   .filet {
     border: 0;
-    border-top: 1px solid hsl(var(--sable) / 0.55);
+    border-top: 1px solid rgba(232, 201, 154, 0.16);
   }
 
-  .filet-sombre {
-    border: 0;
-    border-top: 1px solid hsl(var(--sable) / 0.22);
-  }
-
-  /* ── Grille éditoriale ──────────────────────────────────
-     Colonne de marge persistante à gauche (numéro + cartel),
-     colonne de contenu à droite. C'est la structure d'un
-     document de direction, pas d'une pile de sections centrées. */
+  /* ── Grille éditoriale ──────────────────────────────── */
   .cadre {
     width: 100%;
-    max-width: 78rem;
+    max-width: 82rem;
     margin-inline: auto;
     padding-inline: var(--gouttiere);
   }
 
   .grille-marge {
     display: grid;
-    gap: 2rem 3rem;
+    gap: 1.5rem 3rem;
     grid-template-columns: 1fr;
   }
 
   @media (min-width: 900px) {
     .grille-marge {
-      grid-template-columns: 12rem minmax(0, 1fr);
+      grid-template-columns: 13rem minmax(0, 1fr);
       gap: 0 4rem;
     }
   }
 
   /* ── Bouton signature ───────────────────────────────────
-     Le remplissage monte depuis le bas, comme un niveau qui se
-     remplit. Un seul geste, pas d'ombre ni de mise à l'échelle. */
+     Un cadre qui se remplit de lumière cuivre. */
   .bouton-terre {
     position: relative;
     display: inline-flex;
     align-items: center;
     gap: 0.85rem;
-    padding: 1.1rem 2rem;
-    background: #c4724a;
-    color: #f5f0e8;
-    font-weight: 400;
+    padding: 1.05rem 2rem;
+    border: 1px solid hsl(var(--terre));
+    background: transparent;
+    color: hsl(var(--sable));
+    font-family: var(--font-mono);
+    font-size: var(--pas-donnee);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
     overflow: hidden;
     isolation: isolate;
+    transition: color var(--transition), box-shadow var(--transition);
   }
   .bouton-terre::before {
     content: '';
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: #a85a33;
-    transform: scaleY(0);
-    transform-origin: bottom;
-    transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+    background: hsl(var(--terre));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--transition);
+  }
+  .bouton-terre:hover,
+  .bouton-terre:focus-visible {
+    color: hsl(var(--creme));
+    box-shadow: var(--lueur);
   }
   .bouton-terre:hover::before,
   .bouton-terre:focus-visible::before {
-    transform: scaleY(1);
-  }
-  /* La flèche n'apparaît qu'au survol, et pousse le libellé */
-  .bouton-terre::after {
-    content: '→';
-    display: inline-block;
-    max-width: 0;
-    opacity: 0;
-    transform: translateX(-0.35rem);
-    transition: max-width 520ms cubic-bezier(0.16, 1, 0.3, 1),
-      opacity 320ms ease, transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
-  }
-  .bouton-terre:hover::after,
-  .bouton-terre:focus-visible::after {
-    max-width: 2rem;
-    opacity: 1;
-    transform: translateX(0);
+    transform: scaleX(1);
   }
 
-  /* ── Ligne de siège ─────────────────────────────────────
-     Au survol, un filet terre se trace sous la ligne et le
-     contenu avance légèrement : la ligne « se lève ». */
+  /* ── Ligne réactive ─────────────────────────────────── */
   .ligne-survol {
     position: relative;
-    transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+    transition: background var(--transition), transform var(--transition);
   }
   .ligne-survol::after {
     content: '';
@@ -265,21 +279,21 @@
     bottom: -1px;
     height: 1px;
     width: 100%;
-    background: #c4724a;
+    background: hsl(var(--terre));
+    box-shadow: var(--lueur);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
   }
   @media (hover: hover) and (min-width: 860px) {
     .ligne-survol:hover {
+      background: linear-gradient(90deg, rgba(196, 114, 74, 0.07), transparent 65%);
       transform: translateX(0.5rem);
     }
-    .ligne-survol:hover::after {
-      transform: scaleX(1);
-    }
+    .ligne-survol:hover::after { transform: scaleX(1); }
   }
 
-  /* ── Lien souligné à l'ouverture ────────────────────── */
+  /* ── Lien ───────────────────────────────────────────── */
   .lien-fin {
     position: relative;
     display: inline-block;
@@ -304,7 +318,7 @@
   }
 }
 
-/* L'anneau de lecture s'efface sur petit écran pour ne pas encombrer */
+/* L'anneau de lecture s'efface sur petit écran */
 @media (max-width: 640px) {
   .progression {
     transform: scale(0.82);
@@ -312,22 +326,15 @@
   }
 }
 
-/* ── Curseur personnalisé ─────────────────────────────────
-   La classe n'est posée par le composant que lorsqu'il est bien monté :
-   si le script ne s'exécute pas, le curseur système reste en place. */
+/* Le curseur système n'est masqué que si le script tourne */
 .curseur-perso,
 .curseur-perso a,
 .curseur-perso button {
   cursor: none;
 }
 
-/* ── Mouvement ────────────────────────────────────────────
-   Une seule séquence orchestrée à l'ouverture, des révélations
-   sobres au défilement. Rien ne bouge en boucle. */
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+  html { scroll-behavior: auto; }
   *,
   *::before,
   *::after {

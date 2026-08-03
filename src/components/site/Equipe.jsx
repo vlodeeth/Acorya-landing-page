@@ -23,7 +23,7 @@ export default function Equipe() {
   return (
     <Section id="equipe">
       <EnTete
-        cartel="L'équipe"
+        donnee="L'équipe"
         titre="Vous saurez toujours qui est en face."
         chapo="Le conseil se vend par les personnes. Voici celles avec qui vous travaillerez — les mêmes du premier échange à la dernière réunion."
       />
@@ -36,17 +36,17 @@ export default function Equipe() {
               <article style={{ borderTop: '1px solid rgba(196, 114, 74, 0.55)', paddingTop: '1.75rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
                   <Coeur size={12} exterieur="#C4724A" interieur="#C4724A" />
-                  <p className="cartel" style={{ color: '#C4724A' }}>{membre.role}</p>
+                  <p className="donnee" style={{ color: '#C4724A' }}>{membre.role}</p>
                 </div>
 
                 <h3
                   className="titre-section"
-                  style={{ color: '#3D4A52', fontSize: 'clamp(1.75rem, 1.3rem + 1.4vw, 2.5rem)', marginTop: '1rem' }}
+                  style={{ color: '#F5F0E8', fontSize: 'clamp(1.75rem, 1.3rem + 1.4vw, 2.5rem)', marginTop: '1rem' }}
                 >
                   {membre.nom}
                 </h3>
 
-                <p style={{ color: 'rgba(61, 74, 82, 0.72)', marginTop: '1rem', maxWidth: '32rem' }}>
+                <p style={{ color: 'rgba(245, 240, 232, 0.62)', marginTop: '1rem', maxWidth: '32rem' }}>
                   {membre.corps}
                 </p>
 
@@ -61,7 +61,7 @@ export default function Equipe() {
                   }}
                 >
                   {membre.domaines.map((d) => (
-                    <li key={d} className="cartel cartel-fin" style={{ color: 'rgba(61, 74, 82, 0.55)' }}>
+                    <li key={d} className="donnee donnee-fine" style={{ color: 'rgba(245, 240, 232, 0.5)' }}>
                       {d}
                     </li>
                   ))}

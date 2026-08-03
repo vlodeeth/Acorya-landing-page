@@ -63,7 +63,7 @@ export default function Rideau() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.7, delay: 0.85 }}
-              className="cartel cartel-fin"
+              className="donnee donnee-fine"
               style={{
                 color: 'rgba(232, 201, 154, 0.65)',
                 textAlign: 'center',

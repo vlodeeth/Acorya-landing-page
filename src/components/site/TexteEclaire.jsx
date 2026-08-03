@@ -19,7 +19,7 @@ function Mot({ mot, avancee, debut, fin, couleurFaible, couleur }) {
 export default function TexteEclaire({
   texte,
   couleur = '#3D4A52',
-  couleurFaible = 'rgba(61, 74, 82, 0.25)',
+  couleurFaible = 'rgba(245, 240, 232, 0.18)',
   className = '',
   style = {},
 }) {

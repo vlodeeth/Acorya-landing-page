@@ -9,7 +9,7 @@ export default function Contact() {
     <Section id="contact" sombre>
       <div className="grille-marge">
         <Reveal>
-          <p className="cartel cartel-fin" style={{ color: 'rgba(232, 201, 154, 0.75)', paddingTop: '0.6rem' }}>
+          <p className="donnee donnee-fine" style={{ color: 'rgba(232, 201, 154, 0.75)', paddingTop: '0.6rem' }}>
             L'échange
           </p>
         </Reveal>
@@ -30,7 +30,7 @@ export default function Contact() {
 
           <Reveal delai={0.24}>
             <div style={{ marginTop: '3rem', borderTop: '1px solid rgba(232, 201, 154, 0.22)', paddingTop: '2rem' }}>
-              <p className="cartel cartel-fin" style={{ color: 'rgba(245, 240, 232, 0.45)' }}>
+              <p className="donnee donnee-fine" style={{ color: 'rgba(245, 240, 232, 0.45)' }}>
                 Écrivez-nous
               </p>
               <a

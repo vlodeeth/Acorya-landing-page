@@ -24,7 +24,7 @@ export default function Constat() {
   return (
     <Section id="constat">
       <EnTete
-        cartel="Le constat"
+        donnee="Le constat"
         titre="C'est une question de structure, pas de compétence."
         chapo="Trois réalités que nous retrouvons chez la plupart des dirigeants que nous rencontrons."
       />
@@ -40,18 +40,18 @@ export default function Constat() {
                   gap: '0.75rem 3rem',
                   paddingTop: '2.25rem',
                   paddingBottom: '2.25rem',
-                  borderTop: '1px solid rgba(232, 201, 154, 0.7)',
-                  ...(i === constats.length - 1 ? { borderBottom: '1px solid rgba(232, 201, 154, 0.7)' } : {}),
+                  borderTop: '1px solid rgba(232, 201, 154, 0.16)',
+                  ...(i === constats.length - 1 ? { borderBottom: '1px solid rgba(232, 201, 154, 0.16)' } : {}),
                 }}
                 className="constat-ligne"
               >
                 <h3
-                  className="accroche"
-                  style={{ color: '#3D4A52', fontStyle: 'normal', fontSize: 'clamp(1.375rem, 1.1rem + 1vw, 1.875rem)' }}
+                  className="titre-section"
+                  style={{ color: '#F5F0E8', fontSize: 'clamp(1.25rem, 1rem + 0.9vw, 1.75rem)' }}
                 >
                   {c.titre}
                 </h3>
-                <p style={{ color: 'rgba(61, 74, 82, 0.72)', maxWidth: '38rem' }}>{c.corps}</p>
+                <p style={{ color: 'rgba(245, 240, 232, 0.62)', maxWidth: '38rem' }}>{c.corps}</p>
               </article>
             </Reveal>
           ))}

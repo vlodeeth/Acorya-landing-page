@@ -23,7 +23,7 @@ export default function Resultats() {
   return (
     <Section id="resultats">
       <EnTete
-        cartel="Ce que ça change"
+        donnee="Ce que ça change"
         titre="Des résultats concrets, pas des livrables."
         chapo="Ce que viennent chercher les dirigeants qui nous appellent."
       />
@@ -42,11 +42,11 @@ export default function Resultats() {
               >
                 <h3
                   className="titre-section"
-                  style={{ color: '#3D4A52', fontSize: 'clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem)' }}
+                  style={{ color: '#F5F0E8', fontSize: 'clamp(1.375rem, 1.1rem + 0.9vw, 1.75rem)' }}
                 >
                   {r.titre}
                 </h3>
-                <p style={{ color: 'rgba(61, 74, 82, 0.72)', marginTop: '0.9rem' }}>{r.corps}</p>
+                <p style={{ color: 'rgba(245, 240, 232, 0.62)', marginTop: '0.9rem' }}>{r.corps}</p>
               </div>
             </Reveal>
           ))}

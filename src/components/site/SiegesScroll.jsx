@@ -84,7 +84,7 @@ export default function SiegesScroll() {
       <div className="cadre">
         <EnTete
           sombre
-          cartel="Les cinq sièges"
+          donnee="Les cinq sièges"
           titre="Une direction complète, à l'échelle d'une PME."
           chapo="Chaque siège correspond à une fonction qu'un grand groupe emploie à plein temps. Vous l'activez pour la durée dont vous avez besoin, et pas davantage."
         />
@@ -104,7 +104,7 @@ export default function SiegesScroll() {
                   viewport={{ once: true, margin: '-15%' }}
                   transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
                 >
-                  <p className="cartel" style={{ color: '#C4724A' }}>{s.domaine}</p>
+                  <p className="donnee" style={{ color: '#C4724A' }}>{s.domaine}</p>
 
                   <h3
                     className="titre-section"
@@ -118,7 +118,7 @@ export default function SiegesScroll() {
                   </p>
 
                   <p
-                    className="accroche"
+                    className="voix"
                     style={{
                       color: '#E8C99A',
                       maxWidth: '26ch',
@@ -138,7 +138,7 @@ export default function SiegesScroll() {
           {/* Colonne collée : la table, qui suit le lecteur */}
           <aside className="siege-table">
             <div style={{ width: '100%' }}>
-              <p className="cartel cartel-fin" style={{ color: 'rgba(232, 201, 154, 0.5)' }}>
+              <p className="donnee donnee-fine" style={{ color: 'rgba(232, 201, 154, 0.5)' }}>
                 Comité de direction
               </p>
 
@@ -156,7 +156,7 @@ export default function SiegesScroll() {
               >
                 <span style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
                   <Coeur size={12} />
-                  <span className="cartel" style={{ color: '#F5F0E8' }}>Vous</span>
+                  <span className="donnee" style={{ color: '#F5F0E8' }}>Vous</span>
                 </span>
                 <span style={{ fontSize: '0.8125rem', fontWeight: 300, color: 'rgba(245, 240, 232, 0.45)' }}>
                   Direction générale
@@ -190,7 +190,7 @@ export default function SiegesScroll() {
                       />
 
                       <motion.span
-                        className="cartel"
+                        className="donnee"
                         animate={{
                           color: estActif ? '#F5F0E8' : 'rgba(245, 240, 232, 0.35)',
                           x: estActif ? 6 : 0,
@@ -221,11 +221,11 @@ export default function SiegesScroll() {
               </ul>
 
               <div style={{ marginTop: '1.75rem' }}>
-                <span className="cartel cartel-fin" style={{ color: 'rgba(232, 201, 154, 0.45)', fontSize: '0.5625rem' }}>
+                <span className="donnee donnee-fine" style={{ color: 'rgba(232, 201, 154, 0.45)', fontSize: '0.5625rem' }}>
                   Sièges tenus par Acorya
                 </span>
                 <p
-                  className="cartel"
+                  className="donnee"
                   style={{ color: '#C4724A', marginTop: '0.5rem', fontSize: '1.5rem', letterSpacing: '0.1em' }}
                 >
                   {/* La clé force la relecture de l'animation à chaque changement de siège */}
@@ -239,7 +239,7 @@ export default function SiegesScroll() {
         <Reveal>
           <a
             href="#contact"
-            className="lien-fin cartel"
+            className="lien-fin donnee"
             style={{ color: '#E8C99A', display: 'inline-block', marginTop: '3rem' }}
           >
             Parler de votre situation

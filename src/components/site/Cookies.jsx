@@ -46,15 +46,15 @@ export default function Cookies() {
         <button
           type="button"
           onClick={() => repondre('accepted')}
-          className="cartel"
-          style={{ background: '#E8C99A', color: '#3D4A52', padding: '0.7rem 1.25rem', fontWeight: 400 }}
+          className="donnee"
+          style={{ background: '#E8C99A', color: '#F5F0E8', padding: '0.7rem 1.25rem', fontWeight: 400 }}
         >
           Accepter
         </button>
         <button
           type="button"
           onClick={() => repondre('refused')}
-          className="cartel"
+          className="donnee"
           style={{
             background: 'transparent',
             color: 'rgba(245, 240, 232, 0.75)',

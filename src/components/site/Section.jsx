@@ -3,16 +3,16 @@ import { motion, useInView, useReducedMotion } from 'framer-motion';
 import Mots from './Mots';
 
 /**
- * Deux régimes seulement, et l'alternance porte du sens :
- *  — clair  : le monde du dirigeant (son constat, ses résultats, ses interlocuteurs)
- *  — sombre : ce qu'Acorya prend en charge (les sièges, la méthode, l'échange)
+ * Régime unique : nocturne. La profondeur ne vient plus de l'alternance
+ * clair/sombre mais des niveaux de surface — vide, fond, surface.
  */
-export function Section({ id, sombre = false, children, style = {} }) {
+export function Section({ id, surface = false, children, style = {} }) {
   return (
     <section
       id={id}
       style={{
-        background: sombre ? '#3D4A52' : '#F5F0E8',
+        position: 'relative',
+        background: surface ? 'hsl(var(--surface) / 0.5)' : 'transparent',
         paddingTop: 'var(--marge-section)',
         paddingBottom: 'var(--marge-section)',
         ...style,
@@ -23,8 +23,8 @@ export function Section({ id, sombre = false, children, style = {} }) {
   );
 }
 
-/** En-tête de section : le cartel vit dans la colonne de marge, comme une note de document. */
-export function EnTete({ cartel, titre, chapo, sombre = false }) {
+/** En-tête de section : index technique en marge, titre en capitales fines. */
+export function EnTete({ donnee, titre, chapo, index }) {
   const ancre = useRef(null);
   const enVue = useInView(ancre, { once: true, margin: '-120px' });
   const [secours, setSecours] = useState(false);
@@ -37,27 +37,29 @@ export function EnTete({ cartel, titre, chapo, sombre = false }) {
   return (
     <div className="grille-marge" style={{ marginBottom: 'clamp(3rem, 5vw, 5rem)' }} ref={ancre}>
       <Reveal>
-        <p
-          className="cartel cartel-fin"
-          style={{ color: sombre ? 'rgba(232, 201, 154, 0.75)' : '#C4724A', paddingTop: '0.6rem' }}
-        >
-          {cartel}
-        </p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', paddingTop: '0.55rem' }}>
+          {index && (
+            <span className="donnee donnee-fine" style={{ color: 'rgba(196, 114, 74, 0.85)' }}>
+              {index}
+            </span>
+          )}
+          <span
+            aria-hidden="true"
+            style={{ display: 'block', width: '1.5rem', height: '1px', background: 'rgba(232, 201, 154, 0.35)' }}
+          />
+          <p className="donnee donnee-fine" style={{ color: 'rgba(232, 201, 154, 0.8)' }}>
+            {donnee}
+          </p>
+        </div>
       </Reveal>
+
       <div>
-        <h2 className="titre-section" style={{ color: sombre ? '#F5F0E8' : '#3D4A52', maxWidth: '20ch' }}>
+        <h2 className="titre-section" style={{ color: '#F5F0E8', maxWidth: '22ch' }}>
           <Mots texte={titre} declenche={enVue || secours} delai={0.05} />
         </h2>
         {chapo && (
           <Reveal delai={0.16}>
-            <p
-              className="chapo"
-              style={{
-                color: sombre ? 'rgba(245, 240, 232, 0.7)' : 'rgba(61, 74, 82, 0.75)',
-                maxWidth: '42rem',
-                marginTop: '1.5rem',
-              }}
-            >
+            <p className="chapo" style={{ maxWidth: '42rem', marginTop: '1.5rem' }}>
               {chapo}
             </p>
           </Reveal>
@@ -68,9 +70,8 @@ export function EnTete({ cartel, titre, chapo, sombre = false }) {
 }
 
 /**
- * Révélation sobre au défilement — jamais en boucle, désactivée si le visiteur l'a demandé.
- * Une animation ne doit jamais conditionner la lecture : si l'observateur ne répond pas
- * (navigateur exotique, onglet restauré, capture automatisée), le contenu s'affiche quand même.
+ * Révélation sobre au défilement. Une animation ne doit jamais conditionner
+ * la lecture : si l'observateur ne répond pas, le contenu s'affiche quand même.
  */
 export function Reveal({ children, delai = 0, className, style }) {
   const sansMouvement = useReducedMotion();
@@ -92,7 +93,7 @@ export function Reveal({ children, delai = 0, className, style }) {
       style={style}
       initial={false}
       animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
-      transition={{ duration: 0.65, delay: enVue ? delai : 0, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.65, delay: enVue ? delai : 0, ease: [0.16, 1, 0.3, 1] }}
     >
       {children}
     </motion.div>

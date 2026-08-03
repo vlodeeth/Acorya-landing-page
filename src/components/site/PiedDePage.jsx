@@ -10,7 +10,7 @@ export default function PiedDePage() {
   const annee = new Date().getFullYear();
 
   return (
-    <footer style={{ background: '#F5F0E8', paddingTop: '3rem', paddingBottom: '3rem' }}>
+    <footer style={{ background: 'transparent', paddingTop: '3rem', paddingBottom: '3rem' }}>
       <div className="cadre">
         <div
           className="pied-grille"
@@ -18,7 +18,7 @@ export default function PiedDePage() {
             display: 'grid',
             gap: '2rem',
             alignItems: 'center',
-            borderTop: '1px solid rgba(232, 201, 154, 0.8)',
+            borderTop: '1px solid rgba(232, 201, 154, 0.18)',
             paddingTop: '2rem',
           }}
         >
@@ -29,15 +29,15 @@ export default function PiedDePage() {
               <a
                 key={l.href}
                 href={l.href}
-                className="lien-fin cartel cartel-fin"
-                style={{ color: 'rgba(61, 74, 82, 0.6)' }}
+                className="lien-fin donnee donnee-fine"
+                style={{ color: 'rgba(245, 240, 232, 0.55)' }}
               >
                 {l.label}
               </a>
             ))}
           </nav>
 
-          <p className="cartel cartel-fin" style={{ color: 'rgba(61, 74, 82, 0.45)' }}>
+          <p className="donnee donnee-fine" style={{ color: 'rgba(245, 240, 232, 0.4)' }}>
             Saint-Martin · © {annee}
           </p>
         </div>

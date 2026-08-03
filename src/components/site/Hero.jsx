@@ -1,33 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
-import Coeur from './Coeur';
+import { motion, useReducedMotion } from 'framer-motion';
 import Mots from './Mots';
 import FondCercles from './FondCercles';
 import { DUREE_RIDEAU, rideauAJouer } from '../../lib/ouverture';
 
-/* Les cinq directions qu'un grand groupe emploie à plein temps,
-   et que le dirigeant de PME assure seul. Ce sont exactement les
-   cinq expertises d'Acorya : la table est le sommaire du site. */
 const sieges = ['Finance', 'Organisation', 'Technologie', 'Juridique', 'Achats'];
 
-/* Repères de la séquence d'ouverture, en secondes. */
 const T_TITRE = 0.25;
-const T_TABLE = 0.9;
-const T_SIEGE = 1.0;
-const PAS_SIEGE = 0.09;
-/* Les sièges restent visiblement vacants une bonne seconde avant qu'Acorya
-   les occupe : sans cette pause, le basculement passe inaperçu. */
+const T_PANNEAU = 0.85;
+const T_SIEGE = 1.05;
+const PAS_SIEGE = 0.1;
 const T_OCCUPATION = T_SIEGE + sieges.length * PAS_SIEGE + 1.5;
 
 export default function Hero() {
   const sansMouvement = useReducedMotion();
 
-  /* Si le rideau d'ouverture joue, toute la séquence attend qu'il soit levé :
-     sinon le hero se déroulerait derrière un écran opaque. */
+  /* Si le rideau d'ouverture joue, toute la séquence attend qu'il soit levé. */
   const [decalage] = useState(() => (!sansMouvement && rideauAJouer() ? DUREE_RIDEAU - 0.35 : 0));
-
-  /* Les sièges sont d'abord vacants, puis Acorya les occupe.
-     C'est tout l'argument du site, joué en deux secondes. */
   const [occupe, setOccupe] = useState(Boolean(sansMouvement));
 
   useEffect(() => {
@@ -40,17 +29,18 @@ export default function Hero() {
     sansMouvement
       ? {}
       : {
-          initial: { opacity: 0, y: 12 },
+          initial: { opacity: 0, y: 14 },
           animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.75, delay: decalage + delai, ease: [0.16, 1, 0.3, 1] },
+          transition: { duration: 0.8, delay: decalage + delai, ease: [0.16, 1, 0.3, 1] },
         };
 
   return (
     <section
       id="hero"
+      className="grille-technique"
       style={{
         position: 'relative',
-        background: 'linear-gradient(180deg, #3D4A52 0%, #364149 100%)',
+        background: 'radial-gradient(120% 90% at 70% 40%, hsl(var(--fond)) 0%, hsl(var(--vide)) 70%)',
         minHeight: '100svh',
         display: 'flex',
         alignItems: 'center',
@@ -64,149 +54,208 @@ export default function Hero() {
       <div className="cadre w-full" style={{ position: 'relative' }}>
         <div
           className="hero-grille"
-          style={{ display: 'grid', gap: 'clamp(3.5rem, 6vw, 6rem)', alignItems: 'center' }}
+          style={{ display: 'grid', gap: 'clamp(3.5rem, 5vw, 5.5rem)', alignItems: 'center' }}
         >
-          {/* ── Colonne de gauche : l'énoncé ─────────────────── */}
+          {/* ── L'énoncé ─────────────────────────────────── */}
           <div>
-            <motion.p {...entree(0.05)} className="cartel cartel-fin" style={{ color: '#E8C99A' }}>
-              Au cœur de votre entreprise
-            </motion.p>
+            <motion.div
+              {...entree(0.05)}
+              style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}
+            >
+              <span
+                aria-hidden="true"
+                style={{
+                  width: 6,
+                  height: 6,
+                  background: '#C4724A',
+                  boxShadow: '0 0 12px rgba(196,114,74,0.9)',
+                  display: 'block',
+                }}
+              />
+              <p className="donnee donnee-fine" style={{ color: 'rgba(232, 201, 154, 0.8)' }}>
+                Acorya — au cœur de votre entreprise
+              </p>
+            </motion.div>
 
-            <h1 className="titre-display" style={{ color: '#F5F0E8', marginTop: '1.75rem', maxWidth: '18ch' }}>
-              <Mots texte="Un grand groupe confie son entreprise à cinq directions." delai={decalage + T_TITRE} />
+            <h1
+              className="titre-display"
+              style={{
+                color: '#F5F0E8',
+                marginTop: '2rem',
+                textTransform: 'uppercase',
+                letterSpacing: '0.02em',
+              }}
+            >
+              <Mots texte="Cinq directions." delai={decalage + T_TITRE} pas={0.06} />
               <Mots
-                as="em"
-                texte="Vous les assurez seul."
-                delai={decalage + T_TITRE + 0.42}
-                style={{ display: 'block', color: '#E8C99A', fontStyle: 'italic', marginTop: '0.35em' }}
+                texte="Un seul dirigeant."
+                delai={decalage + T_TITRE + 0.3}
+                pas={0.06}
+                style={{ display: 'block', color: '#C4724A' }}
               />
             </h1>
 
             <motion.p
-              {...entree(1.05)}
+              {...entree(1.0)}
               className="chapo"
-              style={{ color: 'rgba(245, 240, 232, 0.72)', maxWidth: '34rem', marginTop: '2.25rem' }}
+              style={{ maxWidth: '32rem', marginTop: '2.25rem' }}
             >
-              Acorya occupe les cinq sièges vacants de votre comité de direction. Nous ne livrons pas
-              un rapport&nbsp;: nous restons, nous suivons, nous ajustons.
+              Un grand groupe confie son entreprise à cinq directions. Vous les assurez seul.
+              Acorya prend les cinq sièges — et les garde.
             </motion.p>
 
             <motion.div
-              {...entree(1.18)}
+              {...entree(1.15)}
               style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '2rem', marginTop: '3rem' }}
             >
-              <a href="#contact" className="bouton-terre cartel">
-                <span>Réserver un échange</span>
-              </a>
+              <a href="#contact" className="bouton-terre">Réserver un échange</a>
               <a
                 href="#methode"
-                className="lien-fin"
-                style={{ color: 'rgba(245, 240, 232, 0.8)', fontSize: '0.9375rem', fontWeight: 300 }}
+                className="lien-fin donnee donnee-fine"
+                style={{ color: 'rgba(245, 240, 232, 0.7)' }}
               >
                 Voir la méthode
               </a>
             </motion.div>
           </div>
 
-          {/* ── Colonne de droite : la table ─────────────────── */}
-          <motion.div {...entree(T_TABLE)} style={{ width: '100%' }}>
-            <p className="cartel cartel-fin" style={{ color: 'rgba(232, 201, 154, 0.55)' }}>
-              Comité de direction
-            </p>
+          {/* ── Le panneau d'état ────────────────────────── */}
+          <motion.div
+            {...entree(T_PANNEAU)}
+            className="viseur"
+            style={{
+              width: '100%',
+              padding: 'clamp(1.5rem, 2.5vw, 2.25rem)',
+              background: 'hsl(var(--surface) / 0.42)',
+              border: '1px solid rgba(232, 201, 154, 0.14)',
+              backdropFilter: 'blur(6px)',
+              WebkitBackdropFilter: 'blur(6px)',
+              position: 'relative',
+              overflow: 'hidden',
+            }}
+          >
+            {/* Balayage : la lumière passe sur le panneau au moment de la prise de fonction */}
+            {!sansMouvement && (
+              <motion.div
+                aria-hidden="true"
+                initial={{ y: '-120%' }}
+                animate={occupe ? { y: '120%' } : { y: '-120%' }}
+                transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
+                style={{
+                  position: 'absolute',
+                  left: 0,
+                  right: 0,
+                  height: '45%',
+                  background:
+                    'linear-gradient(180deg, transparent, rgba(196,114,74,0.16), transparent)',
+                  pointerEvents: 'none',
+                }}
+              />
+            )}
 
-            <hr className="filet-sombre" style={{ marginTop: '1.25rem' }} />
+            <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: '1rem' }}>
+              <p className="donnee donnee-fine" style={{ color: 'rgba(232, 201, 154, 0.6)' }}>
+                Comité de direction
+              </p>
+              <motion.p
+                className="donnee donnee-fine"
+                animate={{ color: occupe ? '#C4724A' : 'rgba(245, 240, 232, 0.35)' }}
+                transition={{ duration: 0.5 }}
+              >
+                {occupe ? 'Complet' : 'Incomplet'}
+              </motion.p>
+            </div>
 
-            {/* Le siège du dirigeant — marqué par le cœur du logotype */}
+            <hr className="filet" style={{ marginTop: '1.1rem' }} />
+
+            {/* Le siège du dirigeant */}
             <div
               style={{
                 display: 'flex',
-                alignItems: 'baseline',
+                alignItems: 'center',
                 justifyContent: 'space-between',
-                gap: '1.5rem',
-                padding: '1.15rem 0',
+                gap: '1rem',
+                padding: '0.95rem 0',
+                borderBottom: '1px solid rgba(232, 201, 154, 0.12)',
               }}
             >
-              <span style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
-                <Coeur size={13} />
-                <span className="cartel" style={{ color: '#F5F0E8', fontWeight: 400 }}>Vous</span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                <span
+                  aria-hidden="true"
+                  style={{
+                    width: 6,
+                    height: 6,
+                    borderRadius: '50%',
+                    background: '#E8C99A',
+                    boxShadow: '0 0 10px rgba(232,201,154,0.8)',
+                  }}
+                />
+                <span className="donnee" style={{ color: '#F5F0E8' }}>Vous</span>
               </span>
-              <span style={{ fontSize: '0.875rem', fontWeight: 300, color: 'rgba(245, 240, 232, 0.55)' }}>
+              <span className="donnee donnee-fine" style={{ color: 'rgba(245, 240, 232, 0.4)' }}>
                 Direction générale
               </span>
             </div>
 
-            <hr className="filet-sombre" />
-
-            <div style={{ display: 'flex', alignItems: 'stretch', gap: '1.5rem' }}>
-              <ul style={{ flex: 1, listStyle: 'none', margin: 0, padding: 0 }}>
-                {sieges.map((siege, i) => (
-                  <motion.li
-                    key={siege}
-                    initial={sansMouvement ? false : { opacity: 0, x: -10 }}
-                    animate={sansMouvement ? false : { opacity: 1, x: 0 }}
-                    transition={{ duration: 0.6, delay: T_SIEGE + i * PAS_SIEGE, ease: [0.16, 1, 0.3, 1] }}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'baseline',
-                      justifyContent: 'space-between',
-                      gap: '1rem',
-                      padding: '1.05rem 0',
-                      borderBottom: i < sieges.length - 1 ? '1px solid rgba(232, 201, 154, 0.12)' : 'none',
-                    }}
-                  >
-                    <span className="cartel" style={{ color: 'rgba(245, 240, 232, 0.82)' }}>{siege}</span>
-
-                    {/* Vacant, puis occupé : le basculement raconte l'offre */}
-                    <span aria-hidden="true" style={{ position: 'relative', minWidth: '4.5rem', textAlign: 'right' }}>
-                      <AnimatePresence>
-                        {!occupe && (
-                          <motion.span
-                            key="vacant"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0, y: -6 }}
-                            transition={{ duration: 0.4, delay: occupe ? 0 : T_SIEGE + i * PAS_SIEGE + 0.12 }}
-                            className="cartel cartel-fin"
-                            style={{ color: 'rgba(232, 201, 154, 0.5)', fontSize: '0.625rem' }}
-                          >
-                            Vacant
-                          </motion.span>
-                        )}
-                      </AnimatePresence>
-                    </span>
-                  </motion.li>
-                ))}
-              </ul>
-
-              {/* Un seul partenaire pour les cinq sièges */}
-              <motion.div
-                initial={sansMouvement ? false : { opacity: 0 }}
-                animate={sansMouvement ? false : { opacity: occupe ? 1 : 0 }}
-                transition={{ duration: 0.5 }}
-                style={{ display: 'flex', alignItems: 'center', gap: '1rem', paddingLeft: '0.25rem' }}
-              >
-                <motion.span
-                  initial={sansMouvement ? false : { scaleY: 0 }}
-                  animate={sansMouvement ? false : { scaleY: occupe ? 1 : 0 }}
-                  transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
+            <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+              {sieges.map((siege, i) => (
+                <motion.li
+                  key={siege}
+                  initial={sansMouvement ? false : { opacity: 0, x: -10 }}
+                  animate={sansMouvement ? false : { opacity: 1, x: 0 }}
+                  transition={{ duration: 0.6, delay: decalage + T_SIEGE + i * PAS_SIEGE, ease: [0.16, 1, 0.3, 1] }}
                   style={{
-                    display: 'block',
-                    width: '1px',
-                    alignSelf: 'stretch',
-                    background: 'rgba(196, 114, 74, 0.9)',
-                    transformOrigin: 'top',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '1rem',
+                    padding: '0.85rem 0',
+                    borderBottom: i < sieges.length - 1 ? '1px solid rgba(232, 201, 154, 0.09)' : 'none',
                   }}
-                />
-                <span
-                  className="cartel"
-                  style={{ writingMode: 'vertical-rl', color: '#C4724A', letterSpacing: '0.34em', fontWeight: 400 }}
                 >
-                  Acorya
-                </span>
-              </motion.div>
-            </div>
+                  <span style={{ display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                    {/* Témoin d'état : vide tant que le siège l'est */}
+                    <motion.span
+                      aria-hidden="true"
+                      animate={{
+                        background: occupe ? '#C4724A' : 'transparent',
+                        boxShadow: occupe ? '0 0 10px rgba(196,114,74,0.85)' : '0 0 0 rgba(0,0,0,0)',
+                      }}
+                      transition={{ duration: 0.45, delay: occupe ? i * 0.07 : 0 }}
+                      style={{
+                        width: 6,
+                        height: 6,
+                        border: '1px solid rgba(232, 201, 154, 0.4)',
+                        display: 'block',
+                      }}
+                    />
+                    <span className="donnee" style={{ color: 'rgba(245, 240, 232, 0.8)' }}>{siege}</span>
+                  </span>
 
-            <hr className="filet-sombre" />
+                  <span
+                    aria-hidden="true"
+                    className="donnee donnee-fine"
+                    style={{ minWidth: '5.5rem', textAlign: 'right', position: 'relative', height: '1em' }}
+                  >
+                    <motion.span
+                      animate={{ opacity: occupe ? 0 : 1, y: occupe ? -6 : 0 }}
+                      transition={{ duration: 0.35, delay: occupe ? i * 0.07 : decalage + T_SIEGE + i * PAS_SIEGE }}
+                      style={{ position: 'absolute', right: 0, color: 'rgba(245, 240, 232, 0.35)' }}
+                    >
+                      Vacant
+                    </motion.span>
+                    <motion.span
+                      initial={{ opacity: 0, y: 6 }}
+                      animate={{ opacity: occupe ? 1 : 0, y: occupe ? 0 : 6 }}
+                      transition={{ duration: 0.4, delay: occupe ? 0.15 + i * 0.07 : 0 }}
+                      style={{ position: 'absolute', right: 0, color: '#C4724A' }}
+                    >
+                      Acorya
+                    </motion.span>
+                  </span>
+                </motion.li>
+              ))}
+            </ul>
           </motion.div>
         </div>
       </div>
@@ -214,7 +263,7 @@ export default function Hero() {
       <style>{`
         @media (min-width: 1000px) {
           .hero-grille {
-            grid-template-columns: minmax(0, 1.15fr) minmax(20rem, 0.85fr);
+            grid-template-columns: minmax(0, 1.1fr) minmax(21rem, 0.9fr);
           }
         }
       `}</style>
