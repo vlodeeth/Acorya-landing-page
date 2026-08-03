@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { motion, useReducedMotion, useScroll, useSpring } from 'framer-motion';
 import { Section, EnTete, Reveal } from './Section';
 
 /* Ici la numérotation dit quelque chose de vrai : c'est une séquence.
@@ -28,6 +29,11 @@ const etapes = [
 ];
 
 export default function Methode() {
+  const ancre = useRef(null);
+  const sansMouvement = useReducedMotion();
+  const { scrollYProgress } = useScroll({ target: ancre, offset: ['start 0.75', 'end 0.85'] });
+  const trace = useSpring(scrollYProgress, { stiffness: 80, damping: 24, mass: 0.4 });
+
   return (
     <Section id="methode" sombre>
       <EnTete
@@ -39,54 +45,79 @@ export default function Methode() {
 
       <div className="grille-marge">
         <div />
-        <ol style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-          {etapes.map((e, i) => (
-            <Reveal key={e.numero} delai={i * 0.07}>
-              <li
-                className="etape-ligne ligne-survol"
-                style={{
-                  display: 'grid',
-                  gap: '0.5rem 3rem',
-                  paddingTop: '2.25rem',
-                  paddingBottom: '2.25rem',
-                  borderTop: '1px solid rgba(232, 201, 154, 0.18)',
-                  ...(i === etapes.length - 1
-                    ? { borderBottom: '1px solid rgba(232, 201, 154, 0.18)' }
-                    : {}),
-                }}
-              >
-                <span
+        <div style={{ position: 'relative' }} ref={ancre}>
+          {/* Le fil de la méthode se dessine à mesure qu'on la parcourt */}
+          <div className="fil-methode" aria-hidden="true">
+            <div style={{ position: 'absolute', inset: 0, background: 'rgba(232, 201, 154, 0.16)' }} />
+            <motion.div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: '#C4724A',
+                transformOrigin: 'top',
+                scaleY: sansMouvement ? 1 : trace,
+              }}
+            />
+          </div>
+
+          <ol style={{ listStyle: 'none', margin: 0, padding: 0 }}>
+            {etapes.map((e, i) => (
+              <Reveal key={e.numero} delai={i * 0.07}>
+                <li
+                  className="etape-ligne ligne-survol"
                   style={{
-                    fontFamily: 'var(--font-heading)',
-                    fontWeight: 300,
-                    fontSize: 'clamp(2rem, 1.5rem + 1.6vw, 3rem)',
-                    lineHeight: 1,
-                    color: 'rgba(196, 114, 74, 0.9)',
+                    display: 'grid',
+                    gap: '0.5rem 3rem',
+                    paddingTop: '2.25rem',
+                    paddingBottom: '2.25rem',
+                    borderTop: '1px solid rgba(232, 201, 154, 0.18)',
+                    ...(i === etapes.length - 1
+                      ? { borderBottom: '1px solid rgba(232, 201, 154, 0.18)' }
+                      : {}),
                   }}
                 >
-                  {e.numero}
-                </span>
-
-                <div>
-                  <h3
-                    className="titre-section"
-                    style={{ color: '#F5F0E8', fontSize: 'clamp(1.375rem, 1.1rem + 0.9vw, 1.875rem)' }}
+                  <span
+                    style={{
+                      fontFamily: 'var(--font-heading)',
+                      fontWeight: 300,
+                      fontSize: 'clamp(2rem, 1.5rem + 1.6vw, 3rem)',
+                      lineHeight: 1,
+                      color: 'rgba(196, 114, 74, 0.9)',
+                    }}
                   >
-                    {e.titre}
-                  </h3>
-                  <p style={{ color: 'rgba(245, 240, 232, 0.62)', maxWidth: '40rem', marginTop: '0.75rem' }}>
-                    {e.corps}
-                  </p>
-                </div>
-              </li>
-            </Reveal>
-          ))}
-        </ol>
+                    {e.numero}
+                  </span>
+
+                  <div>
+                    <h3
+                      className="titre-section"
+                      style={{ color: '#F5F0E8', fontSize: 'clamp(1.375rem, 1.1rem + 0.9vw, 1.875rem)' }}
+                    >
+                      {e.titre}
+                    </h3>
+                    <p style={{ color: 'rgba(245, 240, 232, 0.62)', maxWidth: '40rem', marginTop: '0.75rem' }}>
+                      {e.corps}
+                    </p>
+                  </div>
+                </li>
+              </Reveal>
+            ))}
+          </ol>
+        </div>
       </div>
 
       <style>{`
+        .fil-methode { display: none; }
         @media (min-width: 860px) {
           .etape-ligne { grid-template-columns: 6rem minmax(0, 1fr); align-items: start; }
+          .fil-methode {
+            display: block;
+            position: absolute;
+            left: -1.75rem;
+            top: 0;
+            bottom: 0;
+            width: 1px;
+          }
         }
       `}</style>
     </Section>

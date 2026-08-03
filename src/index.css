@@ -304,6 +304,23 @@
   }
 }
 
+/* L'anneau de lecture s'efface sur petit écran pour ne pas encombrer */
+@media (max-width: 640px) {
+  .progression {
+    transform: scale(0.82);
+    transform-origin: bottom right;
+  }
+}
+
+/* ── Curseur personnalisé ─────────────────────────────────
+   La classe n'est posée par le composant que lorsqu'il est bien monté :
+   si le script ne s'exécute pas, le curseur système reste en place. */
+.curseur-perso,
+.curseur-perso a,
+.curseur-perso button {
+  cursor: none;
+}
+
 /* ── Mouvement ────────────────────────────────────────────
    Une seule séquence orchestrée à l'ouverture, des révélations
    sobres au défilement. Rien ne bouge en boucle. */

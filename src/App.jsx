@@ -7,6 +7,7 @@ import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import ScrollToTop from './components/ScrollToTop';
 import Cookies from './components/site/Cookies';
+import Curseur from './components/site/Curseur';
 import Home from './pages/Home';
 import MentionsLegales from './pages/MentionsLegales';
 // Add page imports here
@@ -54,6 +55,7 @@ function App() {
           <ScrollToTop />
           <AuthenticatedApp />
           <Cookies />
+          <Curseur />
         </Router>
         <Toaster />
       </QueryClientProvider>
