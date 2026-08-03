@@ -43,7 +43,7 @@ export default function Methode() {
           {etapes.map((e, i) => (
             <Reveal key={e.numero} delai={i * 0.07}>
               <li
-                className="etape-ligne"
+                className="etape-ligne ligne-survol"
                 style={{
                   display: 'grid',
                   gap: '0.5rem 3rem',

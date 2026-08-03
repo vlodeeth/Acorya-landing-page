@@ -37,7 +37,7 @@ const sieges = [
 function Siege({ siege, dernier }) {
   return (
     <article
-      className="siege-ligne"
+      className="siege-ligne ligne-survol"
       style={{
         display: 'grid',
         gap: '0.85rem 3rem',

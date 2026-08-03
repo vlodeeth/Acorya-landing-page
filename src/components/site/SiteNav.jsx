@@ -51,11 +51,36 @@ export default function SiteNav() {
         }}
       >
         <div className="cadre flex items-center justify-between" style={{ height: '4.5rem' }}>
-          <a href="#hero" aria-label="Acorya — retour en haut" className="flex items-center">
+          {/* Les deux versions du logo sont superposées et se croisent en fondu :
+              changer l'attribut src provoquait un clignotement à la bascule. */}
+          <a
+            href="#hero"
+            aria-label="Acorya — retour en haut"
+            style={{ position: 'relative', display: 'block', height: '1.6rem' }}
+          >
             <img
-              src={surLeHero ? '/logo-acorya-creme.svg' : '/logo-acorya-terre.svg'}
+              src="/logo-acorya-creme.svg"
               alt="Acorya"
-              style={{ height: '1.6rem', width: 'auto' }}
+              style={{
+                height: '1.6rem',
+                width: 'auto',
+                opacity: surLeHero ? 1 : 0,
+                transition: 'opacity 400ms ease',
+              }}
+            />
+            <img
+              src="/logo-acorya-terre.svg"
+              alt=""
+              aria-hidden="true"
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                height: '1.6rem',
+                width: 'auto',
+                opacity: surLeHero ? 0 : 1,
+                transition: 'opacity 400ms ease',
+              }}
             />
           </a>
 

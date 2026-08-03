@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { motion, useInView, useReducedMotion } from 'framer-motion';
+import Mots from './Mots';
 
 /**
  * Deux régimes seulement, et l'alternance porte du sens :
@@ -24,8 +25,17 @@ export function Section({ id, sombre = false, children, style = {} }) {
 
 /** En-tête de section : le cartel vit dans la colonne de marge, comme une note de document. */
 export function EnTete({ cartel, titre, chapo, sombre = false }) {
+  const ancre = useRef(null);
+  const enVue = useInView(ancre, { once: true, margin: '-120px' });
+  const [secours, setSecours] = useState(false);
+
+  useEffect(() => {
+    const minuteur = setTimeout(() => setSecours(true), 1600);
+    return () => clearTimeout(minuteur);
+  }, []);
+
   return (
-    <div className="grille-marge" style={{ marginBottom: 'clamp(3rem, 5vw, 5rem)' }}>
+    <div className="grille-marge" style={{ marginBottom: 'clamp(3rem, 5vw, 5rem)' }} ref={ancre}>
       <Reveal>
         <p
           className="cartel cartel-fin"
@@ -35,11 +45,9 @@ export function EnTete({ cartel, titre, chapo, sombre = false }) {
         </p>
       </Reveal>
       <div>
-        <Reveal delai={0.08}>
-          <h2 className="titre-section" style={{ color: sombre ? '#F5F0E8' : '#3D4A52', maxWidth: '20ch' }}>
-            {titre}
-          </h2>
-        </Reveal>
+        <h2 className="titre-section" style={{ color: sombre ? '#F5F0E8' : '#3D4A52', maxWidth: '20ch' }}>
+          <Mots texte={titre} declenche={enVue || secours} delai={0.05} />
+        </h2>
         {chapo && (
           <Reveal delai={0.16}>
             <p

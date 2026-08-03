@@ -205,6 +205,80 @@
     }
   }
 
+  /* ── Bouton signature ───────────────────────────────────
+     Le remplissage monte depuis le bas, comme un niveau qui se
+     remplit. Un seul geste, pas d'ombre ni de mise à l'échelle. */
+  .bouton-terre {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding: 1.1rem 2rem;
+    background: #c4724a;
+    color: #f5f0e8;
+    font-weight: 400;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .bouton-terre::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: #a85a33;
+    transform: scaleY(0);
+    transform-origin: bottom;
+    transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .bouton-terre:hover::before,
+  .bouton-terre:focus-visible::before {
+    transform: scaleY(1);
+  }
+  /* La flèche n'apparaît qu'au survol, et pousse le libellé */
+  .bouton-terre::after {
+    content: '→';
+    display: inline-block;
+    max-width: 0;
+    opacity: 0;
+    transform: translateX(-0.35rem);
+    transition: max-width 520ms cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 320ms ease, transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .bouton-terre:hover::after,
+  .bouton-terre:focus-visible::after {
+    max-width: 2rem;
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  /* ── Ligne de siège ─────────────────────────────────────
+     Au survol, un filet terre se trace sous la ligne et le
+     contenu avance légèrement : la ligne « se lève ». */
+  .ligne-survol {
+    position: relative;
+    transition: transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .ligne-survol::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+    height: 1px;
+    width: 100%;
+    background: #c4724a;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  @media (hover: hover) and (min-width: 860px) {
+    .ligne-survol:hover {
+      transform: translateX(0.5rem);
+    }
+    .ligne-survol:hover::after {
+      transform: scaleX(1);
+    }
+  }
+
   /* ── Lien souligné à l'ouverture ────────────────────── */
   .lien-fin {
     position: relative;
