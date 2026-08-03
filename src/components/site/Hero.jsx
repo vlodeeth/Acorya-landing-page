@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import Coeur from './Coeur';
 import Mots from './Mots';
 import FondCercles from './FondCercles';
+import { DUREE_RIDEAU, rideauAJouer } from '../../lib/ouverture';
 
 /* Les cinq directions qu'un grand groupe emploie à plein temps,
    et que le dirigeant de PME assure seul. Ce sont exactement les
@@ -20,15 +21,20 @@ const T_OCCUPATION = T_SIEGE + sieges.length * PAS_SIEGE + 1.5;
 
 export default function Hero() {
   const sansMouvement = useReducedMotion();
+
+  /* Si le rideau d'ouverture joue, toute la séquence attend qu'il soit levé :
+     sinon le hero se déroulerait derrière un écran opaque. */
+  const [decalage] = useState(() => (!sansMouvement && rideauAJouer() ? DUREE_RIDEAU - 0.35 : 0));
+
   /* Les sièges sont d'abord vacants, puis Acorya les occupe.
      C'est tout l'argument du site, joué en deux secondes. */
   const [occupe, setOccupe] = useState(Boolean(sansMouvement));
 
   useEffect(() => {
     if (sansMouvement) return;
-    const minuteur = setTimeout(() => setOccupe(true), T_OCCUPATION * 1000);
+    const minuteur = setTimeout(() => setOccupe(true), (decalage + T_OCCUPATION) * 1000);
     return () => clearTimeout(minuteur);
-  }, [sansMouvement]);
+  }, [sansMouvement, decalage]);
 
   const entree = (delai) =>
     sansMouvement
@@ -36,7 +42,7 @@ export default function Hero() {
       : {
           initial: { opacity: 0, y: 12 },
           animate: { opacity: 1, y: 0 },
-          transition: { duration: 0.75, delay: delai, ease: [0.16, 1, 0.3, 1] },
+          transition: { duration: 0.75, delay: decalage + delai, ease: [0.16, 1, 0.3, 1] },
         };
 
   return (
@@ -67,11 +73,11 @@ export default function Hero() {
             </motion.p>
 
             <h1 className="titre-display" style={{ color: '#F5F0E8', marginTop: '1.75rem', maxWidth: '18ch' }}>
-              <Mots texte="Un grand groupe confie son entreprise à cinq directions." delai={T_TITRE} />
+              <Mots texte="Un grand groupe confie son entreprise à cinq directions." delai={decalage + T_TITRE} />
               <Mots
                 as="em"
                 texte="Vous les assurez seul."
-                delai={T_TITRE + 0.42}
+                delai={decalage + T_TITRE + 0.42}
                 style={{ display: 'block', color: '#E8C99A', fontStyle: 'italic', marginTop: '0.35em' }}
               />
             </h1>
