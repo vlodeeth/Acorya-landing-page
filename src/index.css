@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Montserrat:wght@200;300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@200;300;400;500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -6,197 +6,242 @@
 
 @layer base {
   :root {
-    /* ── Palette ACORYA ──────────────────────────────────── */
-    --terre:   20 46% 53%;   /* #C4724A – Terre (principale)  */
-    --ardoise: 200 15% 28%;  /* #3D4A52 – Ardoise (structurant) */
-    --sauge:   157 20% 56%;  /* #7A9E8E – Sauge (secondaire)  */
-    --sable:   37 55% 76%;   /* #E8C99A – Sable               */
-    --creme:   37 29% 94%;   /* #F5F0E8 – Crème (fond principal) */
+    /* ── Palette ACORYA — charte v1.0 ───────────────────────
+       Terre    #C4724A  signature, titres, CTA        ~30 %
+       Ardoise  #3D4A52  structure, texte, fonds       ~40 %
+       Sable    #E8C99A  filets, respiration           ~25 % avec Crème
+       Crème    #F5F0E8  fond principal
+       Sauge    #7A9E8E  détails                        ~5 %                */
+    --terre:   20 46% 53%;
+    --ardoise: 200 15% 28%;
+    --sauge:   157 20% 56%;
+    --sable:   37 55% 76%;
+    --creme:   37 29% 94%;
 
-    /* ── Tokens shadcn mappés sur la palette ─────────────── */
-    --background:          37 29% 94%;   /* Crème */
-    --foreground:          200 15% 28%;  /* Ardoise */
-    --card:                0 0% 100%;
+    /* Ardoise assombrie — fonds pleins, jamais du noir */
+    --ardoise-fonce: 200 16% 20%;
+
+    /* ── Tokens shadcn ─────────────────────────────────── */
+    --background:           37 29% 94%;
+    --foreground:          200 15% 28%;
+    --card:                  0 0% 100%;
     --card-foreground:     200 15% 28%;
-    --popover:             0 0% 100%;
+    --popover:               0 0% 100%;
     --popover-foreground:  200 15% 28%;
-    --primary:             20 46% 53%;   /* Terre */
-    --primary-foreground:  0 0% 100%;
-    --secondary:           157 20% 56%;  /* Sauge */
-    --secondary-foreground: 0 0% 100%;
-    --muted:               37 29% 88%;   /* Crème sombre */
-    --muted-foreground:    200 15% 50%;
-    --accent:              37 55% 76%;   /* Sable */
+    --primary:              20 46% 53%;
+    --primary-foreground:    0 0% 100%;
+    --secondary:           157 20% 56%;
+    --secondary-foreground:  0 0% 100%;
+    --muted:                37 29% 88%;
+    --muted-foreground:    200 12% 45%;
+    --accent:               37 55% 76%;
     --accent-foreground:   200 15% 28%;
-    --destructive:         0 60% 50%;
+    --destructive:           0 60% 45%;
     --destructive-foreground: 0 0% 100%;
-    --border:              37 30% 82%;   /* Sable léger */
-    --input:               37 29% 88%;
-    --ring:                20 46% 53%;
-    --radius: 0.75rem;
+    --border:               37 30% 82%;
+    --input:                37 30% 78%;
+    --ring:                 20 46% 53%;
+
+    /* Angles fermes : ni template arrondi, ni brutalisme à angle vif */
+    --radius: 0.125rem;
+
     --font-heading: 'Cormorant Garamond', Georgia, serif;
     --font-body:    'Montserrat', Arial, ui-sans-serif, sans-serif;
     --font-display: 'Cormorant Garamond', Georgia, serif;
     --font-mono:    ui-monospace, monospace;
-    --sidebar-background:  37 29% 94%;
-    --sidebar-foreground:  200 15% 28%;
-    --sidebar-primary:     20 46% 53%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent:      37 29% 88%;
-    --sidebar-accent-foreground:  200 15% 28%;
-    --sidebar-border:      37 30% 82%;
-    --sidebar-ring:        20 46% 53%;
+
+    /* ── Échelle typographique ──────────────────────────
+       En rem : respecte le réglage de taille du visiteur.
+       Les pt de la charte sont convertis (10 pt ≈ 1 rem de lecture web). */
+    --pas-cartel: 0.6875rem;                            /* labels, cartels   */
+    --pas-corps:  1rem;                                 /* corps de texte    */
+    --pas-chapo:  clamp(1.0625rem, 0.95rem + 0.5vw, 1.3125rem);
+    --pas-titre:  clamp(1.875rem, 1.4rem + 1.9vw, 3.125rem); /* titres de section */
+    --pas-display: clamp(2.25rem, 1.7rem + 2.4vw, 4rem);     /* hero              */
+
+    /* ── Rythme vertical ───────────────────────────────── */
+    --marge-section: clamp(6rem, 4rem + 8vw, 11rem);
+    --gouttiere: clamp(1.5rem, 1rem + 3vw, 5rem);
+
+    --transition: 380ms cubic-bezier(0.22, 1, 0.36, 1);
   }
 }
 
 @layer base {
-  * { @apply border-border outline-ring/50; }
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Compense la barre fixe lors des ancres */
+    scroll-padding-top: 5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
     @apply bg-background text-foreground;
-    font-family: 'Montserrat', Arial, sans-serif;
+    font-family: var(--font-body);
     font-weight: 300;
+    font-size: var(--pas-corps);
+    line-height: 1.65;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
-  /* ── Hiérarchie typographique ACORYA ─────────────────── */
-  h1 {
+  /* Les titres n'imposent plus ni couleur ni taille :
+     chaque section décide, via les classes ci-dessous. */
+  h1, h2, h3, h4 {
     font-family: var(--font-heading);
     font-weight: 300;
-    font-size: 42pt;
-    color: #C4724A;
     line-height: 1.05;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
   }
-  h2 {
-    font-family: var(--font-body);
-    font-weight: 500;
-    font-size: 16pt;
-    color: #3D4A52;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+
+  p {
+    text-wrap: pretty;
   }
-  h3 {
-    font-family: var(--font-body);
-    font-weight: 400;
-    font-size: 12pt;
-    color: #3D4A52;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
+
+  /* Accessibilité : le focus doit rester visible partout */
+  :focus-visible {
+    outline: 2px solid hsl(var(--terre));
+    outline-offset: 3px;
+    border-radius: 1px;
   }
-  p, li, span {
+
+  ::selection {
+    background: hsl(var(--terre) / 0.85);
+    color: hsl(var(--creme));
+  }
+}
+
+@layer components {
+  /* ── Le cartel ──────────────────────────────────────────
+     Primitive de la marque : la plaque nominative posée devant
+     chaque siège d'une table de direction. Sert aux labels de
+     section, aux fonctions et aux étiquettes de catégorie.     */
+  .cartel {
     font-family: var(--font-body);
     font-weight: 300;
-    font-size: 10pt;
-    line-height: 1.6;
-    color: #3D4A52;
+    font-size: var(--pas-cartel);
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  .cartel-fin {
+    font-weight: 200;
+    letter-spacing: 0.34em;
+  }
+
+  /* ── Titres ─────────────────────────────────────────── */
+  .titre-display {
+    font-family: var(--font-display);
+    font-weight: 300;
+    font-size: var(--pas-display);
+    line-height: 0.98;
+    letter-spacing: -0.025em;
+  }
+
+  .titre-section {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-size: var(--pas-titre);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+  }
+
+  .chapo {
+    font-family: var(--font-body);
+    font-weight: 300;
+    font-size: var(--pas-chapo);
+    line-height: 1.55;
+  }
+
+  /* Citation / accroche — Cormorant italique, prévu par la charte */
+  .accroche {
+    font-family: var(--font-heading);
+    font-weight: 300;
+    font-style: italic;
+    font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.5rem);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+  }
+
+  /* ── Filet ──────────────────────────────────────────────
+     Le séparateur 0,5 pt sable de la charte, transposé au web. */
+  .filet {
+    border: 0;
+    border-top: 1px solid hsl(var(--sable) / 0.55);
+  }
+
+  .filet-sombre {
+    border: 0;
+    border-top: 1px solid hsl(var(--sable) / 0.22);
+  }
+
+  /* ── Grille éditoriale ──────────────────────────────────
+     Colonne de marge persistante à gauche (numéro + cartel),
+     colonne de contenu à droite. C'est la structure d'un
+     document de direction, pas d'une pile de sections centrées. */
+  .cadre {
+    width: 100%;
+    max-width: 78rem;
+    margin-inline: auto;
+    padding-inline: var(--gouttiere);
+  }
+
+  .grille-marge {
+    display: grid;
+    gap: 2rem 3rem;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 900px) {
+    .grille-marge {
+      grid-template-columns: 12rem minmax(0, 1fr);
+      gap: 0 4rem;
+    }
+  }
+
+  /* ── Lien souligné à l'ouverture ────────────────────── */
+  .lien-fin {
+    position: relative;
+    display: inline-block;
+    padding-bottom: 2px;
+  }
+  .lien-fin::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform var(--transition);
+  }
+  .lien-fin:hover::after,
+  .lien-fin:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
   }
 }
 
-html { scroll-behavior: smooth; }
-
-/* Glass morphism — adapté au fond crème */
-.glass {
-  background: rgba(245, 240, 232, 0.55);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(196, 114, 74, 0.12);
-}
-.glass-strong {
-  background: rgba(245, 240, 232, 0.70);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
-  border: 1px solid rgba(196, 114, 74, 0.18);
-}
-/* Variante sombre pour sections foncées */
-.glass-dark {
-  background: rgba(61, 74, 82, 0.45);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(232, 201, 154, 0.10);
-}
-.glass-dark-strong {
-  background: rgba(61, 74, 82, 0.65);
-  backdrop-filter: blur(40px);
-  -webkit-backdrop-filter: blur(40px);
-  border: 1px solid rgba(232, 201, 154, 0.14);
-}
-
-/* Gradient texts */
-.gradient-text-terre {
-  background: linear-gradient(135deg, #C4724A, #b05a34);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.gradient-text-sauge {
-  background: linear-gradient(135deg, #7A9E8E, #5a8070);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.gradient-text-mixed {
-  background: linear-gradient(135deg, #C4724A 0%, #b05a34 50%, #7A9E8E 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-/* Texte Terre simple */
-.text-terre { color: #C4724A; }
-.text-ardoise { color: #3D4A52; }
-.text-sauge { color: #7A9E8E; }
-.text-sable { color: #E8C99A; }
-.text-creme { color: #F5F0E8; }
-
-/* Marquee */
-@keyframes marquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.animate-marquee { animation: marquee 40s linear infinite; }
-
-@keyframes marquee-fast {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-.animate-marquee-fast { animation: marquee-fast 25s linear infinite; }
-
-/* Float */
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-16px); }
-}
-.animate-float { animation: float 7s ease-in-out infinite; }
-
-/* Noise texture overlay for glassmorphism depth */
-.glass::before, .glass-strong::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-  opacity: 0.018;
-  pointer-events: none;
-}
-.glass, .glass-strong { position: relative; }
-
-/* ── Optimisations mobile ───────────────────────────────── */
-@media (max-width: 768px) {
-  /* Désactiver les backdrop-filter coûteux */
-  .glass, .glass-strong, .glass-dark, .glass-dark-strong {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
+/* ── Mouvement ────────────────────────────────────────────
+   Une seule séquence orchestrée à l'ouverture, des révélations
+   sobres au défilement. Rien ne bouge en boucle. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
-  /* Désactiver les animations de fond */
-  .animate-float {
-    animation: none !important;
-  }
-  /* Ralentir le marquee pour économiser les ressources */
-  .animate-marquee {
-    animation-duration: 60s !important;
-  }
-  /* Désactiver les transformations 3D */
-  * {
-    transform-style: flat !important;
-    perspective: none !important;
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }
